@@ -33,7 +33,7 @@ def main():
     garmin_email = os.environ.get('GARMIN_EMAIL')
     garmin_password = os.environ.get('GARMIN_PASSWORD')
     google_creds_json = os.environ.get('GOOGLE_CREDENTIALS')
-    sheet_id = os.environ.get('SHEET_ID')  # Add sheet ID from environment
+    sheet_id = os.environ.get('SHEETS_ID')  # Add sheet ID from environment
     
     # For local testing: try to load from credentials.json file
     if not google_creds_json and os.path.exists('credentials.json'):
@@ -46,7 +46,7 @@ def main():
         print(f"   GARMIN_EMAIL: {'✓' if garmin_email else '✗'}")
         print(f"   GARMIN_PASSWORD: {'✓' if garmin_password else '✗'}")
         print(f"   GOOGLE_CREDENTIALS: {'✓' if google_creds_json else '✗'}")
-        print(f"   SHEET_ID: {'✓' if sheet_id else '✗'}")
+        print(f"   SHEETS_ID: {'✓' if sheet_id else '✗'}")
         return
     
     # Connect to Garmin
@@ -92,7 +92,7 @@ def main():
             ]
         )
         client = gspread.authorize(creds)
-        sheet = client.open("Daily Scheduler").worksheet("Garmin Data")
+        sheet = client.open(sheet_id).worksheet("Garmin Data")
         print("✅ Connected to Google Sheets")
     except Exception as e:
         print(f"❌ Failed to connect to Google Sheets: {e}")
