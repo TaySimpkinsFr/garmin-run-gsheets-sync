@@ -92,7 +92,7 @@ def main():
             ]
         )
         client = gspread.authorize(creds)
-        sheet = client.open(sheet_id).worksheet("Garmin Data")
+        sheet = client.open_by_key(sheet_id).worksheet("Garmin Data")
         print("✅ Connected to Google Sheets")
     except Exception as e:
         print(f"❌ Failed to connect to Google Sheets: {e}")
