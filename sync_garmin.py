@@ -19,12 +19,12 @@ def format_duration(seconds):
     return round(seconds / 60, 2) if seconds else 0
 
 def format_pace(distance_meters, duration_seconds):
-    """Calculate pace in min/km"""
+    """Calculate pace in min/mi"""
     if not distance_meters or not duration_seconds:
         return 0
-    distance_km = distance_meters / 1000
-    pace_seconds = duration_seconds / distance_km
-    return round(pace_seconds / 60, 2)  # Convert to min/km
+    distance_mi = distance_meters / 1609
+    pace_seconds = duration_seconds / distance_mi
+    return round(pace_seconds / 60, 2)  # Convert to min/mi
 
 def main():
     print("Starting Garmin running activities sync...")
@@ -126,7 +126,7 @@ def main():
             # Extract metrics
             activity_name = activity.get('activityName', 'Run')
             distance_meters = activity.get('distance', 0)
-            distance_km = round(distance_meters / 1000, 2) if distance_meters else 0
+            distance_mi = round(distance_meters / 1609, 2) if distance_meters else 0
             duration_seconds = activity.get('duration', 0)
             duration_min = format_duration(duration_seconds)
             avg_pace = format_pace(distance_meters, duration_seconds)
@@ -141,7 +141,7 @@ def main():
             row = [
                 activity_date,
                 activity_name,
-                distance_km,
+                distance_mi,
                 duration_min,
                 avg_pace,
                 avg_hr,
@@ -154,7 +154,7 @@ def main():
             
             # Append to sheet
             sheet.append_row(row)
-            print(f"✅ Added: {activity_date} - {activity_name} ({distance_km} km)")
+            print(f"✅ Added: {activity_date} - {activity_name} ({distance_mi} mi)")
             new_entries += 1
             
         except Exception as e:
